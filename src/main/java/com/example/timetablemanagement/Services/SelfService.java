@@ -7,6 +7,7 @@ import com.example.timetablemanagement.Models.TimetableEntry;
 import com.example.timetablemanagement.Repositories.ClassroomRepo;
 import com.example.timetablemanagement.Repositories.SubjectRepo;
 import com.example.timetablemanagement.Repositories.TimeSlotRepo;
+import com.example.timetablemanagement.Repositories.TimetableEntryRepo;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,14 +17,16 @@ import java.util.Optional;
 
 @Service
 public class SelfService implements TimetableService{
+    private TimetableEntryRepo timetableEntryRepo;
     private TimeSlotRepo timeSlotRepo;
     private SubjectRepo subjectRepo;
     private ClassroomRepo classroomRepo;
 
-    public SelfService(TimeSlotRepo timeSlotRepo, SubjectRepo subjectRepo, ClassroomRepo classroomRepo) {
+    public SelfService(TimetableEntryRepo timetableEntryRepo, TimeSlotRepo timeSlotRepo, SubjectRepo subjectRepo, ClassroomRepo classroomRepo) {
         this.classroomRepo = classroomRepo;
         this.subjectRepo = subjectRepo;
         this.timeSlotRepo = timeSlotRepo;
+        this.timetableEntryRepo = timetableEntryRepo;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class SelfService implements TimetableService{
         timetableEntryList.add(timetableEntry);
 
         //Saving TimeSlot
-        timeSlotRepo.save((timetableEntry.getTimeSlot()));
+        TimeSlot timeSlot = timeSlotRepo.save((timetableEntry.getTimeSlot()));
 
         //Saving Classroom
         Optional<Classroom> optionalClassroom = classroomRepo.findByName(timetableEntry.getClassroom().getStandard(), timetableEntry.getClassroom().getSection());
@@ -49,6 +52,10 @@ public class SelfService implements TimetableService{
         List<TimetableEntry> classroomEntryList = classroom.getTimetableEntryList();
         classroomEntryList.add(timetableEntry);
 
-        return null;
+        timetableEntry.setClassroom(classroom);
+        timetableEntry.setSubject(subject);
+        timetableEntry.setTimeSlot(timeSlot);
+
+        return timetableEntryRepo.save(timetableEntry);
     }
 }
