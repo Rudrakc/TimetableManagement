@@ -1,25 +1,32 @@
 package com.example.timetablemanagement.Controllers;
 
 import com.example.timetablemanagement.Models.Timetable;
+import com.example.timetablemanagement.Models.TimetableEntry;
+import com.example.timetablemanagement.Services.TimetableService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/timetable")
 public class TimetableController {
 
-    @GetMapping("/timetable")
+    private TimetableService timetableService;
+
+    public TimetableController(TimetableService timetableService) {
+        this.timetableService = timetableService;
+    }
+
+    @GetMapping("")
     public Timetable getTimetable(Long id) {
+//        System.out.println("Creating timetable");
         return null;
     }
 
 
-    @PostMapping("/timetable")
-    public ResponseEntity<Timetable> createTimetable(@RequestBody Timetable timetable) {
+    @PostMapping("")
+    public ResponseEntity<TimetableEntry> createTimetableEntry(@RequestBody TimetableEntry timetableEntry) {
         System.out.println("Creating timetable");
-        return null;
+        return timetableService.createTimetableEntry(timetableEntry);
     }
 
 }
