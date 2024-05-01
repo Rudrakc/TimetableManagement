@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class TimetableController {
 
@@ -19,10 +21,10 @@ public class TimetableController {
         this.timetableService = timetableService;
     }
 
-    //Here we will fetch all the time tables
+    //Here we will fetch all the timetables
     @GetMapping("/timetable")
-    public String getTimetable(Long id) {
-        return "We will fetch all the time tables soon!";
+    public List<TimetableEntryDto> getAllTimetableEntries() {
+        return timetableService.getAllTimetableEntries();
     }
 
 
@@ -38,20 +40,16 @@ public class TimetableController {
         if(timetable == null) {
             return ResponseEntity.badRequest().build();
         }
-        System.out.println("Creating timetable");
-        System.out.println(timetable.toString());
         TimetableEntry timetableEntry =  timetableService.createTimetableEntry(timetable);
         TimetableEntryDto timetableEntryDto = new TimetableEntryDto(timetableEntry);
-        ResponseEntity<TimetableEntryDto> responseEntity = new ResponseEntity<>(timetableEntryDto, HttpStatus.CREATED);
 
-        return responseEntity;
+        return new ResponseEntity<>(timetableEntryDto, HttpStatus.CREATED);
     }
 
     //Updating an timetable entry
-    @PutMapping("/timetable/{id}")
-    public String updateTimetable(@PathVariable Long id, @RequestBody Timetable timetable) {
-
-        return "We will update the timetable soon!";
+    @PutMapping("/timetable")
+    public ResponseEntity<?> updateTimetable(@RequestBody TimetableEntry timetable) {
+        return timetableService.updateTimetableEntry(timetable);
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.timetablemanagement.Services;
 
+import com.example.timetablemanagement.DTOs.TimetableEntryDto;
 import com.example.timetablemanagement.Models.Classroom;
 import com.example.timetablemanagement.Models.Subject;
 import com.example.timetablemanagement.Models.TimeSlot;
@@ -8,11 +9,14 @@ import com.example.timetablemanagement.Repositories.ClassroomRepo;
 import com.example.timetablemanagement.Repositories.SubjectRepo;
 import com.example.timetablemanagement.Repositories.TimeSlotRepo;
 import com.example.timetablemanagement.Repositories.TimetableEntryRepo;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -39,6 +43,7 @@ public class TimeTableServiceMySQL implements TimetableService{
         }
         Subject subject = subjectRepo.findByName(timetableEntry.getSubject().getName()).get();
 
+
         //Saving TimeSlot
         TimeSlot timeSlot = timeSlotRepo.save((timetableEntry.getTimeSlot()));
 
@@ -60,14 +65,20 @@ public class TimeTableServiceMySQL implements TimetableService{
     public ResponseEntity<Object> getTimetableEntry(Long id) {
         Optional<TimetableEntry> timetableEntry = timetableEntryRepo.findById(id);
         if(timetableEntry.isEmpty()) {
-            return new ResponseEntity<>("Timetable Entry not found", null, 404);
+            return new ResponseEntity<>("Timetable Entry not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(timetableEntry.get(), HttpStatusCode.valueOf(200));
+        TimetableEntryDto response = new TimetableEntryDto(timetableEntry.get());
+        return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
     }
 
     @Override
-    public ResponseEntity<?> getAllTimetableEntries() {
-        return null;
+    public List<TimetableEntryDto> getAllTimetableEntries() {
+        List<TimetableEntry> timetableEntryList = timetableEntryRepo.findAll();
+        List<TimetableEntryDto> response =  new ArrayList<>();
+        for(TimetableEntry entry : timetableEntryList) {
+            response.add(new TimetableEntryDto(entry));
+        }
+        return response;
     }
 
     public ResponseEntity<Object> deleteTimetableEntry(Long id) {
@@ -77,4 +88,34 @@ public class TimeTableServiceMySQL implements TimetableService{
         timetableEntryRepo.deleteById(id);
         return new ResponseEntity<>("Timetable Entry deleted", null, 200);
     }
+
+
+    public ResponseEntity<Object> updateTimetableEntry(TimetableEntry timetableEntry) {
+        Optional<TimetableEntry> optionalTimetableEntry = timetableEntryRepo.findById(timetableEntry.getId());
+
+        if(optionalTimetableEntry.isEmpty()) {
+            return new ResponseEntity<>("Timetable Entry not found", HttpStatus.NOT_FOUND);
+        }
+
+        TimetableEntry existingTimetableEntry = optionalTimetableEntry.get();
+
+        if(timetableEntry.getSubject()!=null) {
+            existingTimetableEntry.setSubject(timetableEntry.getSubject());
+        }
+        if(timetableEntry.getTimeSlot()!=null) {
+            existingTimetableEntry.setTimeSlot(timetableEntry.getTimeSlot());
+        }
+        if(timetableEntry.getClassroom()!=null) {
+            existingTimetableEntry.setClassroom(timetableEntry.getClassroom());
+        }
+
+        try {
+            timetableEntryRepo.save(existingTimetableEntry);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error updating timetable entry", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(existingTimetableEntry, HttpStatus.OK);
+    }
+
 }
