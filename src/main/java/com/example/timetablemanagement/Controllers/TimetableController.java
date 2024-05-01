@@ -33,9 +33,6 @@ public class TimetableController {
     }
 
 
-    //Here we will create a timetable
-    // also define the request body
-    // creating a good object for that
     @PostMapping("/timetable")
     public ResponseEntity<TimetableEntryDto> createTimetable(@RequestBody TimetableEntry timetable) {
         if(timetable == null) {

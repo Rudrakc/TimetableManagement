@@ -8,15 +8,14 @@ import lombok.Setter;
 @Entity
 public class TimetableEntry {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private daysOfWeek day;
     @ManyToOne
     private Subject subject;
     @OneToOne
     private TimeSlot timeSlot;
-
-    @OneToOne
+    @ManyToOne
     private Classroom classroom;
 
 

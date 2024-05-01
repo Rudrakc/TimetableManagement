@@ -14,8 +14,6 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @OneToMany
-    private List<TimetableEntry> timetableEntryList;
     private String teacherName;
 
     @Override
@@ -23,7 +21,6 @@ public class Subject {
         return "Subject{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", timetableEntryList=" + timetableEntryList +
                 ", teacherName='" + teacherName + '\'' +
                 '}';
     }

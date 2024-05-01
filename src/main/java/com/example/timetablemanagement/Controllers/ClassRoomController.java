@@ -1,14 +1,15 @@
 package com.example.timetablemanagement.Controllers;
 
+import com.example.timetablemanagement.DTOs.TimetableEntryDto;
 import com.example.timetablemanagement.Models.Classroom;
+import com.example.timetablemanagement.Models.TimetableEntry;
 import com.example.timetablemanagement.Services.ClassRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ClassRoomController {
@@ -21,15 +22,15 @@ public class ClassRoomController {
     }
 
 
-    //Here we will fetch all the class rooms
+    //Here we will fetch all the classrooms
     @GetMapping("/classroom")
     public String getClassRoom() {
         return "We will fetch all the class rooms soon!";
     }
 
-    //Here We will Fetch the class room by id
+    //Here We will Fetch the classroom by id
     @GetMapping("/classroom/{id}")
-    public ResponseEntity<Object> getClassRoomById(Long id) {
+    public ResponseEntity<Object> getClassRoomById(@PathVariable("id") Long id) {
         Classroom classroom =  classRoomService.getClassRoomById(id);
         if (classroom != null) {
             return new ResponseEntity<>(classroom, HttpStatus.OK);
@@ -38,9 +39,14 @@ public class ClassRoomController {
         }
     }
 
+    @GetMapping("/classroom/timetable/{id}")
+    public List<TimetableEntryDto> getTimetableEnteries(@PathVariable("id") Long id) {
+        return classRoomService.getTimetableEnteries(id);
+    }
 
 
-    //Here we will create a class room
+
+    //Here we will create a classroom
     // also define the request body
     // creating a good object for that
     @PostMapping("/classroom")
