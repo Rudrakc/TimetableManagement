@@ -29,8 +29,13 @@ public class ClassRoomController {
 
     //Here We will Fetch the class room by id
     @GetMapping("/classroom/{id}")
-    public String getClassRoomById(Long id) {
-        return "We will fetch the class room by id soon!";
+    public ResponseEntity<Object> getClassRoomById(Long id) {
+        Classroom classroom =  classRoomService.getClassRoomById(id);
+        if (classroom != null) {
+            return new ResponseEntity<>(classroom, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(new String("Classroom not found"), HttpStatus.NOT_FOUND);
+        }
     }
 
 
