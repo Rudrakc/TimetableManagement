@@ -16,4 +16,6 @@ public interface TimetableService {
 
     ResponseEntity<?> deleteTimetableEntry(Long id);
 
+    ResponseEntity<?> updateTimetableEntry( TimetableEntry timetableEntry);
+
 }

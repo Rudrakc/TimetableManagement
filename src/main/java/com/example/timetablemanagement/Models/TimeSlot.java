@@ -12,6 +12,7 @@ import java.util.Date;
 @Setter
 @Entity
 public class TimeSlot {
+    private daysOfWeek day;
     private String startTime;
     private String endTime;
     @Id

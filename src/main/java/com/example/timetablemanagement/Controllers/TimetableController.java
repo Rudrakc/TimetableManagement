@@ -40,8 +40,6 @@ public class TimetableController {
         if(timetable == null) {
             return ResponseEntity.badRequest().build();
         }
-        System.out.println("Creating timetable");
-        System.out.println(timetable.toString());
         TimetableEntry timetableEntry =  timetableService.createTimetableEntry(timetable);
         TimetableEntryDto timetableEntryDto = new TimetableEntryDto(timetableEntry);
 
@@ -49,10 +47,9 @@ public class TimetableController {
     }
 
     //Updating an timetable entry
-    @PutMapping("/timetable/{id}")
-    public String updateTimetable(@PathVariable Long id, @RequestBody Timetable timetable) {
-
-        return "We will update the timetable soon!";
+    @PutMapping("/timetable")
+    public ResponseEntity<?> updateTimetable(@RequestBody TimetableEntry timetable) {
+        return timetableService.updateTimetableEntry(timetable);
     }
 
 
