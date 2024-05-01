@@ -19,9 +19,6 @@ public class TimetableEntry {
     @OneToOne
     private Classroom classroom;
 
-    public enum daysOfWeek {
-        MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
-    }
 
      public String toString() {
          return "TimetableEntry{" +

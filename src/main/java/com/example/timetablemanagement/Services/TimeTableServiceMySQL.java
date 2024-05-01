@@ -8,22 +8,22 @@ import com.example.timetablemanagement.Repositories.ClassroomRepo;
 import com.example.timetablemanagement.Repositories.SubjectRepo;
 import com.example.timetablemanagement.Repositories.TimeSlotRepo;
 import com.example.timetablemanagement.Repositories.TimetableEntryRepo;
-import org.springframework.http.RequestEntity;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
-import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class SelfService implements TimetableService{
+public class TimeTableServiceMySQL implements TimetableService{
     private TimetableEntryRepo timetableEntryRepo;
     private TimeSlotRepo timeSlotRepo;
     private SubjectRepo subjectRepo;
     private ClassroomRepo classroomRepo;
 
-    public SelfService(TimetableEntryRepo timetableEntryRepo, TimeSlotRepo timeSlotRepo, SubjectRepo subjectRepo, ClassroomRepo classroomRepo) {
+    public TimeTableServiceMySQL(TimetableEntryRepo timetableEntryRepo, TimeSlotRepo timeSlotRepo, SubjectRepo subjectRepo, ClassroomRepo classroomRepo) {
         this.classroomRepo = classroomRepo;
         this.subjectRepo = subjectRepo;
         this.timeSlotRepo = timeSlotRepo;
@@ -58,5 +58,27 @@ public class SelfService implements TimetableService{
         timetableEntry.setTimeSlot(timeSlot);
 
         return timetableEntryRepo.save(timetableEntry);
+    }
+
+    @Override
+    public ResponseEntity<Object> getTimetableEntry(Long id) {
+        Optional<TimetableEntry> timetableEntry = timetableEntryRepo.findById(id);
+        if(timetableEntry.isEmpty()) {
+            return new ResponseEntity<>("Timetable Entry not found", null, 404);
+        }
+        return new ResponseEntity<>(timetableEntry.get(), HttpStatusCode.valueOf(200));
+    }
+
+    @Override
+    public ResponseEntity<?> getAllTimetableEntries() {
+        return null;
+    }
+
+    public ResponseEntity<Object> deleteTimetableEntry(Long id) {
+        if(timetableEntryRepo.findById(id).isEmpty()) {
+            return new ResponseEntity<>("Timetable Entry not found", null, 404);
+        }
+        timetableEntryRepo.deleteById(id);
+        return new ResponseEntity<>("Timetable Entry deleted", null, 200);
     }
 }

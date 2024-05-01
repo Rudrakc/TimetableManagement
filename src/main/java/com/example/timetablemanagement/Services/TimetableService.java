@@ -7,4 +7,10 @@ import org.springframework.http.ResponseEntity;
 public interface TimetableService {
     TimetableEntry createTimetableEntry(TimetableEntry timetableEntry);
 
+    ResponseEntity<?> getTimetableEntry(Long id);
+
+    ResponseEntity<?> getAllTimetableEntries();
+
+    ResponseEntity<?> deleteTimetableEntry(Long id);
+
 }

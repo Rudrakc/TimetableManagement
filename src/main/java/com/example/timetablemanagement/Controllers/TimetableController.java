@@ -28,8 +28,8 @@ public class TimetableController {
 
     //Here We will Fetch the timetable by id
     @GetMapping("/timetable/{id}")
-    public String getTimetableById(@PathVariable Long id) {
-        return "We will fetch the timetable by id soon!";
+    public ResponseEntity<?> getTimetableById(@PathVariable("id") Long id) {
+        return timetableService.getTimetableEntry(id);
     }
 
 
@@ -44,7 +44,7 @@ public class TimetableController {
         System.out.println("Creating timetable");
         System.out.println(timetable.toString());
         TimetableEntry timetableEntry =  timetableService.createTimetableEntry(timetable);
-        TimetableEntryDto timetableEntryDto = timetableEntryToDto(timetableEntry);
+        TimetableEntryDto timetableEntryDto = new TimetableEntryDto(timetableEntry);
         ResponseEntity<TimetableEntryDto> responseEntity = new ResponseEntity<>(timetableEntryDto, HttpStatus.CREATED);
 
         return responseEntity;
@@ -60,19 +60,9 @@ public class TimetableController {
 
     //Deleting a timetable entry
     @DeleteMapping("/timetable/{id}")
-    public String deleteTimetable(@PathVariable Long id) {
-        return "We will delete the timetable soon!";
+    public ResponseEntity<?> deleteTimetable(@PathVariable Long id) {
+        return timetableService.deleteTimetableEntry(id);
     }
 
-    public TimetableEntryDto timetableEntryToDto(TimetableEntry timetableEntry) {
-        TimetableEntryDto timetableEntryDto = new TimetableEntryDto();
-        timetableEntryDto.setDay(String.valueOf(timetableEntry.getDay()));
-        timetableEntryDto.setSubjectName(timetableEntry.getSubject().getName());
-        timetableEntryDto.setTeacherName(timetableEntry.getSubject().getTeacherName());
-        timetableEntryDto.setTimeSlot(timetableEntry.getTimeSlot().getStartTime()+" - "+timetableEntry.getTimeSlot().getEndTime());
-        timetableEntryDto.setClassroom(timetableEntry.getClassroom().getStandard() + timetableEntry.getClassroom().getSection());
-
-        return timetableEntryDto;
-    }
 
 }
