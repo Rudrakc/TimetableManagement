@@ -13,7 +13,7 @@ public class Classroom {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int standard;
+    private Integer standard;
     private String section;
     @OneToOne
     private Teacher classTeacher;

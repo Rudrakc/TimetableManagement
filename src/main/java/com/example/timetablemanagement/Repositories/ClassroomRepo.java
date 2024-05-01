@@ -18,4 +18,7 @@ public interface ClassroomRepo extends JpaRepository<Classroom, Long> {
 
     @Query("SELECT s FROM Classroom s WHERE s.standard = ?1 AND s.section = ?2")
     Optional<Classroom> findByName(int standard, String section);
+
+    @Override
+    void deleteById(Long id);
 }
