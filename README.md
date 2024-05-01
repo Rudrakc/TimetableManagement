@@ -9,8 +9,7 @@ This project aims to develop a School Timetable Management System using Spring B
 - Subject
 
 ## Model Schema
-![Model Schema](file:///Users/rudrachauhan/Developer/Trimester3/Backend/TimetableManagement/src/main/resources/asset/model_schema.png)
-
+![Model Schema](src/main/resources/asset/model_schema.png)
 
 ## Requirements
 - **Timetable Entry Model**:
