@@ -1,5 +1,6 @@
 package com.example.timetablemanagement.Services;
 
+import com.example.timetablemanagement.DTOs.TimetableEntryDto;
 import com.example.timetablemanagement.Models.Classroom;
 import com.example.timetablemanagement.Models.Subject;
 import com.example.timetablemanagement.Models.TimeSlot;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -62,12 +65,18 @@ public class TimeTableServiceMySQL implements TimetableService{
         if(timetableEntry.isEmpty()) {
             return new ResponseEntity<>("Timetable Entry not found", null, 404);
         }
-        return new ResponseEntity<>(timetableEntry.get(), HttpStatusCode.valueOf(200));
+        TimetableEntryDto response = new TimetableEntryDto(timetableEntry.get());
+        return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
     }
 
     @Override
-    public ResponseEntity<?> getAllTimetableEntries() {
-        return null;
+    public List<TimetableEntryDto> getAllTimetableEntries() {
+        List<TimetableEntry> timetableEntryList = timetableEntryRepo.findAll();
+        List<TimetableEntryDto> response =  new ArrayList<>();
+        for(TimetableEntry entry : timetableEntryList) {
+            response.add(new TimetableEntryDto(entry));
+        }
+        return response;
     }
 
     public ResponseEntity<Object> deleteTimetableEntry(Long id) {
@@ -77,4 +86,5 @@ public class TimeTableServiceMySQL implements TimetableService{
         timetableEntryRepo.deleteById(id);
         return new ResponseEntity<>("Timetable Entry deleted", null, 200);
     }
+
 }

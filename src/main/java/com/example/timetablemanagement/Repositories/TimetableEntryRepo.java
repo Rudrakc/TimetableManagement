@@ -19,4 +19,8 @@ public interface TimetableEntryRepo extends JpaRepository<TimetableEntry, Long> 
     List<TimetableEntry> getTimetableEntriesByClassroom_Id(Long id);
 
     List<TimetableEntry> getTimetableEntriesBySubject_Id(Long id);
+
+    @Override
+    List<TimetableEntry> findAll();
+
 }
