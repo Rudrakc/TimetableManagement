@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface SubjectService {
     List<TimetableEntryDto> getTimetableEnteries( Long id);
+
+    void updateSubject(Long id, TimetableEntryDto timetableEntryDto);
+
+    void deleteSubject(Long id);
 }
