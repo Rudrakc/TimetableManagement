@@ -1,8 +1,11 @@
 package com.example.timetablemanagement.Controllers;
 
 import com.example.timetablemanagement.Models.Timetable;
+import com.example.timetablemanagement.Models.TimetableEntry;
 import com.example.timetablemanagement.Services.TimetableService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,15 +36,26 @@ public class TimetableController {
     // also define the request body
     // creating a good object for that
     @PostMapping("/timetable")
-    public String createTimetable(@RequestBody Timetable timetable) {
-        return "We will create a timetable soon!";
+    public ResponseEntity<TimetableEntry> createTimetable(@RequestBody TimetableEntry timetable) {
+        if(timetable == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        System.out.println("Creating timetable");
+        System.out.println(timetable.toString());
+        TimetableEntry timetableEntry =  timetableService.createTimetableEntry(timetable);
+//        return "We will create a timetable soon!";
+        ResponseEntity<TimetableEntry> responseEntity = new ResponseEntity<>(timetableEntry, HttpStatus.CREATED);
+
+        return responseEntity;
     }
 
-    //Updating an timetable enty
+    //Updating an timetable entry
     @PutMapping("/timetable/{id}")
     public String updateTimetable(@PathVariable Long id, @RequestBody Timetable timetable) {
+
         return "We will update the timetable soon!";
     }
+
 
     //Deleting a timetable entry
     @DeleteMapping("/timetable/{id}")

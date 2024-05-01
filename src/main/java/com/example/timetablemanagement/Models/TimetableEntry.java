@@ -8,7 +8,7 @@ import lombok.Setter;
 @Entity
 public class TimetableEntry {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
     private daysOfWeek day;
     @ManyToOne
@@ -18,5 +18,17 @@ public class TimetableEntry {
     @OneToOne
     private Classroom classroom;
 
+    public enum daysOfWeek {
+        MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+    }
 
+     public String toString() {
+         return "TimetableEntry{" +
+                 "id=" + id +
+                 ", day=" + day +
+                 ", subject=" + subject.toString() +
+                 ", timeSlot=" + timeSlot +
+                 ", classroom=" + classroom +
+                 '}';
+     }
 }

@@ -18,4 +18,13 @@ public class Subject {
     private List<TimetableEntry> timetableEntryList;
     private String teacherName;
 
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", timetableEntryList=" + timetableEntryList +
+                ", teacherName='" + teacherName + '\'' +
+                '}';
+    }
 }

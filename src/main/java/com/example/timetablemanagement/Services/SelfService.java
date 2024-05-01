@@ -12,6 +12,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +31,7 @@ public class SelfService implements TimetableService{
     }
 
     @Override
-    public ResponseEntity<TimetableEntry> createTimetableEntry(TimetableEntry timetableEntry) {
+    public TimetableEntry createTimetableEntry(TimetableEntry timetableEntry) {
         // Saving Subject
         Optional<Subject> optionalSubject = subjectRepo.findByName(timetableEntry.getSubject().getName());
         if(optionalSubject.isEmpty()) {
