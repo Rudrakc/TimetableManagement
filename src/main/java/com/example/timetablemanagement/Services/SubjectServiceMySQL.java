@@ -23,4 +23,14 @@ public class SubjectServiceMySQL implements SubjectService {
         }
         return response;
     }
+
+    @Override
+    public void updateSubject(Long id, TimetableEntryDto timetableEntryDto) {
+
+    }
+
+    @Override
+    public void deleteSubject(Long id) {
+
+    }
 }
