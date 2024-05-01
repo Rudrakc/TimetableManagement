@@ -15,8 +15,6 @@ public class Classroom {
     private Long id;
     private Integer standard;
     private String section;
-    @OneToOne
-    private Teacher classTeacher;
     @OneToMany
     private List<TimetableEntry> timetableEntryList;
 }

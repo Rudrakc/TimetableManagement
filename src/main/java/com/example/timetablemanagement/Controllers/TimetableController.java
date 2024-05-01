@@ -1,5 +1,6 @@
 package com.example.timetablemanagement.Controllers;
 
+import com.example.timetablemanagement.DTOs.TimetableEntryDto;
 import com.example.timetablemanagement.Models.Timetable;
 import com.example.timetablemanagement.Models.TimetableEntry;
 import com.example.timetablemanagement.Services.TimetableService;
@@ -36,15 +37,15 @@ public class TimetableController {
     // also define the request body
     // creating a good object for that
     @PostMapping("/timetable")
-    public ResponseEntity<TimetableEntry> createTimetable(@RequestBody TimetableEntry timetable) {
+    public ResponseEntity<TimetableEntryDto> createTimetable(@RequestBody TimetableEntry timetable) {
         if(timetable == null) {
             return ResponseEntity.badRequest().build();
         }
         System.out.println("Creating timetable");
         System.out.println(timetable.toString());
         TimetableEntry timetableEntry =  timetableService.createTimetableEntry(timetable);
-//        return "We will create a timetable soon!";
-        ResponseEntity<TimetableEntry> responseEntity = new ResponseEntity<>(timetableEntry, HttpStatus.CREATED);
+        TimetableEntryDto timetableEntryDto = timetableEntryToDto(timetableEntry);
+        ResponseEntity<TimetableEntryDto> responseEntity = new ResponseEntity<>(timetableEntryDto, HttpStatus.CREATED);
 
         return responseEntity;
     }
@@ -61,6 +62,17 @@ public class TimetableController {
     @DeleteMapping("/timetable/{id}")
     public String deleteTimetable(@PathVariable Long id) {
         return "We will delete the timetable soon!";
+    }
+
+    public TimetableEntryDto timetableEntryToDto(TimetableEntry timetableEntry) {
+        TimetableEntryDto timetableEntryDto = new TimetableEntryDto();
+        timetableEntryDto.setDay(String.valueOf(timetableEntry.getDay()));
+        timetableEntryDto.setSubjectName(timetableEntry.getSubject().getName());
+        timetableEntryDto.setTeacherName(timetableEntry.getSubject().getTeacherName());
+        timetableEntryDto.setTimeSlot(timetableEntry.getTimeSlot().getStartTime()+" - "+timetableEntry.getTimeSlot().getEndTime());
+        timetableEntryDto.setClassroom(timetableEntry.getClassroom().getStandard() + timetableEntry.getClassroom().getSection());
+
+        return timetableEntryDto;
     }
 
 }

@@ -38,8 +38,8 @@ public class SelfService implements TimetableService{
             subjectRepo.save(timetableEntry.getSubject());
         }
         Subject subject = subjectRepo.findByName(timetableEntry.getSubject().getName()).get();
-        List<TimetableEntry> timetableEntryList = subject.getTimetableEntryList();
-        timetableEntryList.add(timetableEntry);
+//        List<TimetableEntry> timetableEntryList = subject.getTimetableEntryList();
+//        timetableEntryList.add(timetableEntry);
 
         //Saving TimeSlot
         TimeSlot timeSlot = timeSlotRepo.save((timetableEntry.getTimeSlot()));
@@ -50,8 +50,8 @@ public class SelfService implements TimetableService{
             classroomRepo.save(timetableEntry.getClassroom());
         }
         Classroom classroom =  classroomRepo.findByName(timetableEntry.getClassroom().getStandard(), timetableEntry.getClassroom().getSection()).get();
-        List<TimetableEntry> classroomEntryList = classroom.getTimetableEntryList();
-        classroomEntryList.add(timetableEntry);
+//        List<TimetableEntry> classroomEntryList = classroom.getTimetableEntryList();
+//        classroomEntryList.add(timetableEntry);
 
         timetableEntry.setClassroom(classroom);
         timetableEntry.setSubject(subject);
