@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -15,6 +17,6 @@ public class Classroom {
     private String section;
     @OneToOne
     private Teacher classTeacher;
-    @OneToOne
-    private Timetable timetable;
+    @OneToMany
+    private List<TimetableEntry> timetableEntryList;
 }

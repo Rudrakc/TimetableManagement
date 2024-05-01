@@ -12,8 +12,8 @@ import java.util.Date;
 @Setter
 @Entity
 public class TimeSlot {
-    private Date startTime;
-    private Date endTime;
+    private String startTime;
+    private String endTime;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

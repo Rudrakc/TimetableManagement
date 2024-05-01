@@ -16,7 +16,6 @@ public class Subject {
     private String name;
     @OneToMany
     private List<TimetableEntry> timetableEntryList;
-    @ManyToOne
-    private Teacher teacher;
+    private String teacherName;
 
 }
