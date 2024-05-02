@@ -11,4 +11,5 @@ public interface TimeSlotRepo extends JpaRepository<TimeSlot, Long> {
 
     @Override
     TimeSlot save(TimeSlot timeSlot);
+
 }
