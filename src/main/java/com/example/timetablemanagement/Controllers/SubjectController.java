@@ -1,7 +1,10 @@
 package com.example.timetablemanagement.Controllers;
 
 import com.example.timetablemanagement.DTOs.TimetableEntryDto;
+import com.example.timetablemanagement.Models.Subject;
 import com.example.timetablemanagement.Services.SubjectService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,13 +16,18 @@ public class SubjectController {
         this.subjectService = subjectService;
     }
 
-    @GetMapping("/subject/timetable/{id}")
-    public List<TimetableEntryDto> getTimetableEnteries(@PathVariable("id") Long id) {
-        return subjectService.getTimetableEnteries(id);
+    @GetMapping("/subject/{id}")
+    public ResponseEntity<?> getSubject(@PathVariable("id") Long id) {
+        Subject subject = subjectService.getSubject(id);
+        if(subject == null){
+            return  new ResponseEntity<>("No Subjecct Exits with the given id", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(subject, HttpStatus.OK);
+
     }
     @PutMapping("/subject/{id}")
-    public void updateSubject(@PathVariable("id") Long id, @RequestBody TimetableEntryDto timetableEntryDto) {
-        subjectService.updateSubject(id, timetableEntryDto);
+    public ResponseEntity<?> updateSubject( @RequestBody Subject subject) {
+        return subjectService.updateSubject(subject);
     }
 
     @DeleteMapping("/subject/{id}")

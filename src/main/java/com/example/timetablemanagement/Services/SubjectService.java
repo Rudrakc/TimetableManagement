@@ -1,14 +1,16 @@
 package com.example.timetablemanagement.Services;
 
 import com.example.timetablemanagement.DTOs.TimetableEntryDto;
+import com.example.timetablemanagement.Models.Subject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
 public interface SubjectService {
-    List<TimetableEntryDto> getTimetableEnteries( Long id);
+    Subject getSubject(Long id);
 
-    void updateSubject(Long id, TimetableEntryDto timetableEntryDto);
+    ResponseEntity<?> updateSubject(Subject subject);
 
     void deleteSubject(Long id);
 }
