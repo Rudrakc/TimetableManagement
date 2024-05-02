@@ -44,12 +44,12 @@ This project aims to develop a School Timetable Management System using Spring B
     - Access the API endpoints through appropriate API client tools (e.g., Postman).
 
 ## Contributors
-- Rudra Kumar Chauhan
-- Narasimha
-- Navneet
-- Kanan Arora
-- Karan Das A
-- Utkersh
+- Rudra Kumar Chauhan - Created repo and service layer
+- Narasimha - Created repo and service layer
+- Navneet - Created Classroom controller
+- Kanan Arora - Created documentation and model schema
+- Karan Das A - Created DTOs and models
+- Utkersh - Created subject controller
 
 
 
