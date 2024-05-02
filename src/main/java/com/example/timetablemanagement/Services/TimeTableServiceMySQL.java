@@ -111,7 +111,8 @@ public class TimeTableServiceMySQL implements TimetableService{
 
         try {
             timetableEntryRepo.save(existingTimetableEntry);
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             return new ResponseEntity<>("Error updating timetable entry", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
