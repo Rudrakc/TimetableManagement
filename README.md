@@ -47,7 +47,7 @@ This project aims to develop a School Timetable Management System using Spring B
 - Rudra Kumar Chauhan - Created repo and service layer
 - Narasimha - Created repo and service layer
 - Navneet - Created Classroom controller
-- Kanan Arora - Created documentation and model schema
+- Kanan Arora - Created documentation, model schema and Time Table controller
 - Karan Das A - Created DTOs and models
 - Utkersh - Created subject controller
 
