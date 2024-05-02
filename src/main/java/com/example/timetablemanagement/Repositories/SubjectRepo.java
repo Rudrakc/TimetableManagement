@@ -15,7 +15,7 @@ public interface SubjectRepo extends JpaRepository<Subject, Long> {
     @Override
     Optional<Subject> findById(Long id);
 
-    List<TimetableEntry> getTimetableEntriesBySubject_id(Long id);
+//    List<TimetableEntry> getTimetableEntriesBySubject_id(Long id);
 
     @Override
     Subject save(Subject subject);
