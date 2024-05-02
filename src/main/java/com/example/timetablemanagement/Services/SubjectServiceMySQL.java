@@ -39,6 +39,8 @@ public class SubjectServiceMySQL implements SubjectService {
 
     @Override
     public void deleteSubject(Long id) {
-//        Optional<Subject> subject =
+        Optional<Subject> subject = subjectRepo.findById(id);
+        subject.ifPresent(subjectRepo::delete);
+
     }
 }
